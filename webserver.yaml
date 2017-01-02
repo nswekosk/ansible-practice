@@ -32,6 +32,12 @@
      copy: src=demo/demo.conf dest=/etc/apache2/sites-available mode=0755
      notify: restart apache2
 
+   # Added pip and created a virtual environment.
+
+   - name: setup python virtualenv
+     pip: requirements=/var/www/demo/requirements.txt virtualenv=/var/www/demo/.venv
+     notify: restart apache2
+
   # Restart apache web server after it's running.
 
   handlers:
