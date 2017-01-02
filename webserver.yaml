@@ -12,13 +12,27 @@
       - libapache2-mod-wsgi
       - python-pip
       - python-virtualenv
-      
+
+   # ensure the apache server and wsgi are up and running.
+
    - name: ensure apache2 started
      service: name=apache2 state=started enabled=yes
 
    - name: ensure mod_wsgi enabled
      apache2_module: state=present name=wsgi
      notify: restart apache2
+
+   # Copy application into directory on host.
+
+   - name: copy demo app source
+     copy: src=demo/app/ dest=/var/www/demo mode=0755
+     notify: restart apache2
+
+   - name: copy apache virtual host config
+     copy: src=demo/demo.conf dest=/etc/apache2/sites-available mode=0755
+     notify: restart apache2
+
+  # Restart apache web server after it's running.
 
   handlers:
    - name: restart apache2
