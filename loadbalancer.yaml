@@ -1,0 +1,11 @@
+- hosts: loadbalancer
+  become: true
+  gather_facts: no
+  pre_tasks:
+    - name: 'install python2'
+      raw: sudo apt-get -y install python-simplejson
+  tasks: 
+   - name: install nginx
+     apt: name=nginx state=present update-cache=yes
+   - name: ensure nginx started
+     service: name=nginx state=started enabled=yes

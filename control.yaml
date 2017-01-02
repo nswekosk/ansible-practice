@@ -1,0 +1,12 @@
+---
+- hosts: control
+  become: true
+  gather_facts: no
+  pre_tasks:
+    - name: 'install python2'
+      raw: sudo apt-get -y install python-simplejson
+  tasks:
+   - name: install tools
+     apt: name={{item}} state=present update_cache=yes
+     with_items:
+      - curl

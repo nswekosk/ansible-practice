@@ -1,0 +1,15 @@
+[loadbalancer]
+#lb01
+54.227.228.126	ansible_user=ubuntu
+
+[webserver]
+#app01
+#app02
+54.89.16.209 	ansible_user=ubuntu
+
+[database]
+#db01
+54.89.26.97	ansible_user=ubuntu
+
+[control]
+control ansible_connection=local
