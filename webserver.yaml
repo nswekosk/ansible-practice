@@ -13,6 +13,7 @@
       - libapache2-mod-wsgi
       - python-pip
       - python-virtualenv
+      - python-mysqldb
 
    # ensure the apache server and wsgi are up and running.
 
