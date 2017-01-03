@@ -4,8 +4,29 @@
   pre_tasks:
     - name: 'install python2'
       raw: sudo apt-get -y install python-simplejson
+
   tasks: 
-   - name: install nginx
-     apt: name=nginx state=present update-cache=yes
-   - name: ensure nginx started
-     service: name=nginx state=started enabled=yes
+    - name: install nginx
+      apt: name=nginx state=present update-cache=yes
+   
+    - name: ensure nginx started
+      service: name=nginx state=started enabled=yes
+
+    # configure nginx to point to correct application
+
+    - name: configure nginx site
+      template: src=templates/nginx.conf.j2 dest=/etc/nginx/sites-available/demo mode=0644
+      notify: restart nginx
+
+    - name: de-activate default nginx site
+      file: path=/etc/nginx/sites-enabled/default state=absent
+      notify: restart nginx
+
+    - name: activate demo nginx site
+      file: src=/etc/nginx/sites-available/demo dest=/etc/nginx/sites-enabled/demo state=link
+      notify: restart nginx
+
+
+  handlers:
+    - name: restart nginx
+      service: name=nginx state=restarted
