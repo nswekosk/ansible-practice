@@ -1,2 +1,5 @@
 ---
-# defaults file for mysql
+db_name: myqpp
+db_user: dbuser
+db_pass: dbpass
+db_user_host: localhost
